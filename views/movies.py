@@ -1,7 +1,9 @@
 # здесь контроллеры/хендлеры/представления для обработки запросов (flask ручки).
 # сюда импортируются сервисы из пакета service
-
+from flask import request
 from flask_restx import Resource, Namespace
+
+from implemented import movie_service
 
 movie_ns = Namespace('movies')
 
@@ -12,9 +14,7 @@ movie_ns = Namespace('movies')
 class MoviesView(Resource):
     def get(self):
         # all_movies = Movie.query
-        all_movies = db.session.query(Movie.id, Movie.title, Movie.description, Movie.rating,
-                                     Movie.trailer, Genre.name.label('genre'),
-                                     Director.name.label('director')).join(Genre).join(Director)
+        all_movies = movie_service.get_all()
         if 'director_id' in request.args:
             did = request.args.get('director_id')
             all_movies = all_movies.filter(Movie.director_id == did)
