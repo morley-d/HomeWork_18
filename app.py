@@ -29,7 +29,7 @@ def register_extensions(app):
     # create_data(app, db)
 
 
-# функция
+# функция для наполнения БД (у нас база уже заполнена)
 # def create_data(app, db):
 #     with app.app_context():
 #         db.create_all()
