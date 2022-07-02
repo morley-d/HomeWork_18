@@ -1,4 +1,9 @@
 from flask_restx import Resource, Namespace
+from flask import request
+from sqlalchemy.orm.exc import UnmappedInstanceError
+
+from dao.model.genre import genres_schema, genre_schema
+from implemented import genre_service
 
 genre_ns = Namespace('genres')
 
@@ -7,30 +12,25 @@ genre_ns = Namespace('genres')
 @genre_ns.route('/')
 class GenresView(Resource):
     def get(self):
-        all_genres = Genre.query
-        return movies_schema.dump(all_genres), 200
+        all_genres = genre_service.get_all()
+        return genres_schema.dump(all_genres), 200
 
     def post(self):
         req_json = request.json
-        new_genre = Genre(**req_json)
-        with db.session.begin():
-            db.session.add(new_genre)
+        genre_service.create(req_json)
         return "", 201
 
 @genre_ns.route('/<int:genre_id>')
 class GenreView(Resource):
-    def put(self, genre_id: int):
-        genre_update = db.session.query(Genre).get(genre_id)
-        if not genre_update:
-            return "Нет такого жанра", 404
-        req_json = request.json
-        genre_update.name = req_json['name']
-        db.session.add(genre_update)
-        db.session.commit()
-        return "", 201
+    def get(self, genre_id: int):
+        one_genre = genre_service.get_one(genre_id)
+        if not one_genre:
+            return "Такого жанра нет", 404
+        return genre_schema.dump(one_genre), 200
 
     def delete(self, genre_id: int):
-        genre = db.session.query(Genre).get(genre_id)
-        db.session.delete(genre)
-        db.session.commit()
+        try:
+            genre_service.delete(genre_id)
+        except UnmappedInstanceError:
+            return "Такого жанра нет", 404
         return "", 204
