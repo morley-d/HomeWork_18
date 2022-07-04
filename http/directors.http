@@ -12,7 +12,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:10001/directors/555
+GET http://localhost:10001/directors/5
 Accept: application/json
 
 ###

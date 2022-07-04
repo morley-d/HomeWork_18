@@ -13,12 +13,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5000/movies/?page=3
+GET http://localhost:10001/movies/
 Accept: application/json
 
 ###
 
-GET http://localhost:5000/movies/2
+GET http://localhost:10001/movies/2
 Accept: application/json
 
 ###

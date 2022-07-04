@@ -5,8 +5,8 @@ from flask_restx import Resource, Namespace
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm.exc import UnmappedInstanceError
 
-from dao.model.movie import movies_schema, movie_schema
-from implemented import movie_service
+from app.dao.model.movie import movies_schema, movie_schema
+from app.implemented import movie_service
 
 movie_ns = Namespace('movies')
 

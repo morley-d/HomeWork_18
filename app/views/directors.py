@@ -2,8 +2,8 @@ from flask import request, make_response
 from flask_restx import Resource, Namespace
 from sqlalchemy.orm.exc import UnmappedInstanceError
 
-from implemented import director_service
-from dao.model.director import directors_schema, director_schema
+from app.implemented import director_service
+from app.dao.model.director import directors_schema, director_schema
 
 director_ns = Namespace('directors')
 

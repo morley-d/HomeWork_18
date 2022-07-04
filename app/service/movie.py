@@ -3,7 +3,7 @@
 # но чаще всего будет какая-то логика обработки данных сейчас или в будущем.
 from sqlalchemy.exc import NoResultFound
 
-from dao.movie import MovieDAO
+from app.dao.movie import MovieDAO
 
 
 class MovieService:

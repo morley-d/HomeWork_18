@@ -2,8 +2,8 @@ from flask_restx import Resource, Namespace
 from flask import request, make_response
 from sqlalchemy.orm.exc import UnmappedInstanceError
 
-from dao.model.genre import genres_schema, genre_schema
-from implemented import genre_service
+from app.dao.model.genre import genres_schema, genre_schema
+from app.implemented import genre_service
 
 genre_ns = Namespace('genres')
 
