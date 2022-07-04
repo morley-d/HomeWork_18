@@ -1,5 +1,5 @@
 from flask_restx import Resource, Namespace
-from flask import request
+from flask import request, make_response
 from sqlalchemy.orm.exc import UnmappedInstanceError
 
 from dao.model.genre import genres_schema, genre_schema
@@ -19,8 +19,10 @@ class GenresView(Resource):
     def post(self):
         """Добавление нового жанра"""
         req_json = request.json
-        genre_service.create(req_json)
-        return "", 201
+        new_genre = genre_service.create(req_json)
+        response = make_response("", 201)
+        response.headers['location'] = f"/{genre_ns.path}/{new_genre.id}"
+        return response
 
 @genre_ns.route('/<int:genre_id>')
 class GenreView(Resource):

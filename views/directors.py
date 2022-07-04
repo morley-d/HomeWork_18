@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, make_response
 from flask_restx import Resource, Namespace
 from sqlalchemy.orm.exc import UnmappedInstanceError
 
@@ -20,8 +20,10 @@ class DirectorsView(Resource):
     def post(self):
         """Добавление нового режиссера"""
         req_json = request.json
-        director_service.create(req_json)
-        return "", 201
+        new_director = director_service.create(req_json)
+        response = make_response("", 201)
+        response.headers['location'] = f"/{director_ns.path}/{new_director.id}"
+        return response
 
 
 @director_ns.route('/<int:dir_id>')

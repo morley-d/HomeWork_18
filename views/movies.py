@@ -25,8 +25,8 @@ class MoviesView(Resource):
     def post(self):
         """Добавление нового фильма"""
         req_json = request.json
-        movie_service.create(req_json)
-        return "", 201
+        new_movie = movie_service.create(req_json)
+        return "", 201, {"location": f"/{movie_ns.path}/{new_movie.id}"}
 
 
 @movie_ns.route('/<int:mid>')
